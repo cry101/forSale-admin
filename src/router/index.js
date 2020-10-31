@@ -45,13 +45,58 @@ export const constantRoutes = [
 
     {
         path: '/',
+        redirect: '/company'
+    },
+
+    {
+        path: '/company',
         component: Layout,
-        redirect: '/company',
-        children: [{
-            path: 'company',
-            component: () => import('@/views/company'),
-            meta: { title: '公司管理' }
-        }]
+        redirect: '/company/list',
+        meta: { title: '公司管理' },
+        children: [
+            {
+                path: 'list',
+                component: () => import('@/views/company'),
+                meta: { title: '公司列表' }
+            }
+        ]
+    },
+
+    {
+        path: '/product',
+        component: Layout,
+        redirect: '/product/tag',
+        meta: { title: '产品管理' },
+        children: [
+            {
+                path: 'tag',
+                component: () => import('@/views/tag'),
+                meta: { title: '产品分类' }
+            },
+            {
+                path: 'product',
+                component: () => import('@/views/product'),
+                meta: { title: '产品列表' }
+            }
+        ]
+    },
+    {
+        path: '/inventory',
+        component: Layout,
+        redirect: '/inventory/record',
+        meta: { title: '库存管理' },
+        children: [
+            {
+                path: 'record',
+                component: () => import('@/views/record'),
+                meta: { title: '进销记录' }
+            },
+            {
+                path: 'list',
+                component: () => import('@/views/inventory'),
+                meta: { title: '库存列表' }
+            }
+        ]
     },
 
     // 404 page must be placed at the end !!!

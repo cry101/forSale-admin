@@ -14,6 +14,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import * as common from '@/filters'
 
 /**
  * If you don't want to use mock-server
@@ -24,6 +25,9 @@ import '@/permission' // permission control
  * please remove it before going online ! ! !
  */
 
+Object.keys(common).forEach(key => {
+    Vue.filter(key, common[key])
+})
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明

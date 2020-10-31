@@ -12,8 +12,29 @@
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row>
             <el-table-column type="selection" width="55" />
             <el-table-column align="center" label="序号" type="index" width="80" />
-            <el-table-column align="center" label="公司id" prop="_id" />
-            <el-table-column align="center" label="公司名称" prop="name" />
+            <el-table-column align="center" label="产品名称" prop="pro_name" />
+            <el-table-column align="center" label="产品图片">
+                <template slot-scope="scope">
+                    <img :src="scope.row.pic | filterUrl" width="100" height="100" alt="">
+                </template>
+            </el-table-column>
+            <el-table-column align="center" label="操作数量">
+                <template slot-scope="scope">
+                    <p v-for="(item, index) in scope.row.price_list" :key="index">{{ item.price }}：{{ item.amount }}</p>
+                </template>
+            </el-table-column>
+            <el-table-column align="center" label="状态">
+                <template slot-scope="scope">
+                    <el-tag :type="scope.row.type ? 'warning' : ''">{{ scope.row.type ? '进库' : '出库' }}</el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column align="center" label="顾客下单">
+                <template slot-scope="scope">
+                    <el-tag :type="scope.row.is_net ? 'success' : ''">{{ scope.row.is_net ? '是' : '否' }}</el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column align="center" label="顾客姓名" prop="customer_name" />
+            <el-table-column align="center" label="产品分类" prop="tag_name" />
             <el-table-column align="center" label="备注" prop="remark" />
             <el-table-column align="center" label="创建时间" prop="created_time" />
             <el-table-column align="center" label="更新时间" prop="updated_time" />
@@ -31,7 +52,7 @@
 </template>
 
 <script>
-import { listCompany, deleteCompany } from '@/api/company'
+import { listRecord, deleteRecord } from '@/api/record'
 import CompanyForm from './components/form'
 import Pagination from '@/components/Pagination'
 export default {
@@ -58,7 +79,7 @@ export default {
     },
     methods: {
         fetchData() {
-            listCompany(this.listQuery).then(res => {
+            listRecord(this.listQuery).then(res => {
                 this.list = res.data.list
                 this.total = res.data.total
             })
@@ -80,8 +101,8 @@ export default {
             this.visible = true
         },
         handleDelete(item) {
-            this.$confirm('是否删除该公司，将会影响到该公司产品！', { type: 'warning' }).then(() => {
-                deleteCompany({ id: item._id }).then((response) => {
+            this.$confirm('是否删除该记录，将会影响到库存！', { type: 'warning' }).then(() => {
+                deleteRecord({ id: item._id }).then((response) => {
                     this.$message.success('删除成功')
                     this.fetchData()
                 })

@@ -12,9 +12,19 @@
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row>
             <el-table-column type="selection" width="55" />
             <el-table-column align="center" label="序号" type="index" width="80" />
-            <el-table-column align="center" label="公司id" prop="_id" />
-            <el-table-column align="center" label="公司名称" prop="name" />
-            <el-table-column align="center" label="备注" prop="remark" />
+            <el-table-column align="center" label="产品id" prop="_id" />
+            <el-table-column align="center" label="产品名称" prop="name" />
+            <el-table-column align="center" label="产品图片">
+                <template slot-scope="scope">
+                    <img :src="scope.row.pic | filterUrl" width="100" height="100" alt="">
+                </template>
+            </el-table-column>
+            <el-table-column align="center" label="产品价格">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.price.join(',') }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column align="center" label="产品分类" prop="tag_name" />
             <el-table-column align="center" label="创建时间" prop="created_time" />
             <el-table-column align="center" label="更新时间" prop="updated_time" />
             <el-table-column align="center" label="操作">
@@ -26,18 +36,18 @@
         </el-table>
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page_no" :limit.sync="listQuery.page_size" @pagination="fetchData" />
 
-        <company-form :form="form" :visible="visible" @close="visible = false" @refresh="handleRefresh" />
+        <product-form :form="form" :visible="visible" @close="visible = false" @refresh="handleRefresh" />
     </div>
 </template>
 
 <script>
-import { listCompany, deleteCompany } from '@/api/company'
-import CompanyForm from './components/form'
+import { listProduct, deleteProduct } from '@/api/company'
+import ProductForm from './components/form'
 import Pagination from '@/components/Pagination'
 export default {
-    name: 'Company',
+    name: 'Product',
     components: {
-        CompanyForm, Pagination
+        ProductForm, Pagination
     },
     data() {
         return {
@@ -58,7 +68,7 @@ export default {
     },
     methods: {
         fetchData() {
-            listCompany(this.listQuery).then(res => {
+            listProduct(this.listQuery).then(res => {
                 this.list = res.data.list
                 this.total = res.data.total
             })
@@ -80,8 +90,8 @@ export default {
             this.visible = true
         },
         handleDelete(item) {
-            this.$confirm('是否删除该公司，将会影响到该公司产品！', { type: 'warning' }).then(() => {
-                deleteCompany({ id: item._id }).then((response) => {
+            this.$confirm('是否删除该产品！', { type: 'warning' }).then(() => {
+                deleteProduct({ id: item._id }).then((response) => {
                     this.$message.success('删除成功')
                     this.fetchData()
                 })

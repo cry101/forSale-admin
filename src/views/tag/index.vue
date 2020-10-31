@@ -10,11 +10,9 @@
             </el-form-item>
         </el-form>
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row>
-            <el-table-column type="selection" width="55" />
-            <el-table-column align="center" label="序号" type="index" width="80" />
-            <el-table-column align="center" label="公司id" prop="_id" />
-            <el-table-column align="center" label="公司名称" prop="name" />
-            <el-table-column align="center" label="备注" prop="remark" />
+            <el-table-column align="center" label="序号" type="index" width="60" />
+            <el-table-column align="center" label="分类id" prop="_id" width="220" />
+            <el-table-column align="center" label="分类名称" prop="name" />
             <el-table-column align="center" label="创建时间" prop="created_time" />
             <el-table-column align="center" label="更新时间" prop="updated_time" />
             <el-table-column align="center" label="操作">
@@ -26,18 +24,18 @@
         </el-table>
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page_no" :limit.sync="listQuery.page_size" @pagination="fetchData" />
 
-        <company-form :form="form" :visible="visible" @close="visible = false" @refresh="handleRefresh" />
+        <tag-form :form="form" :visible="visible" @close="visible = false" @refresh="handleRefresh" />
     </div>
 </template>
 
 <script>
-import { listCompany, deleteCompany } from '@/api/company'
-import CompanyForm from './components/form'
+import { listTag, deleteTag } from '@/api/company'
+import TagForm from './components/form'
 import Pagination from '@/components/Pagination'
 export default {
-    name: 'Company',
+    name: 'Tag',
     components: {
-        CompanyForm, Pagination
+        TagForm, Pagination
     },
     data() {
         return {
@@ -58,7 +56,7 @@ export default {
     },
     methods: {
         fetchData() {
-            listCompany(this.listQuery).then(res => {
+            listTag(this.listQuery).then(res => {
                 this.list = res.data.list
                 this.total = res.data.total
             })
@@ -75,13 +73,13 @@ export default {
             this.form = {
                 name: item.name,
                 id: item._id,
-                remark: item.remark
+                company_id: item.company_id
             }
             this.visible = true
         },
         handleDelete(item) {
-            this.$confirm('是否删除该公司，将会影响到该公司产品！', { type: 'warning' }).then(() => {
-                deleteCompany({ id: item._id }).then((response) => {
+            this.$confirm('是否删除该分类！', { type: 'warning' }).then(() => {
+                deleteTag({ id: item._id }).then((response) => {
                     this.$message.success('删除成功')
                     this.fetchData()
                 })
