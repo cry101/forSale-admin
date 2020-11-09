@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
-// import { getToken } from '@/utils/auth'
-
+import { getToken } from '@/utils/auth'
+import router from '@/router'
 // create an axios instance
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -19,7 +19,7 @@ service.interceptors.request.use(
             // let each request carry token
             // ['X-Token'] is a custom headers key
             // please modify it according to the actual situation
-            config.headers['token'] = '' // getToken()
+            config.headers['token'] = getToken()
         }
         return config
     },
@@ -33,11 +33,6 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
     /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
-  */
-
-    /**
    * Determine the request status by custom code
    * Here is just an example
    * You can also judge the status by HTTP Status Code
@@ -48,12 +43,18 @@ service.interceptors.response.use(
         // if the custom code is not 20000, it is judged as an error.
         if (!res.success) {
             Message({
-                message: res.message || 'Error',
+                message: res.msg || '出错啦',
                 type: 'error',
-                duration: 5 * 1000
+                duration: 3 * 1000
             })
 
-            return Promise.reject(new Error(res.message || 'Error'))
+            if (res.code === 401) {
+                store.dispatch('user/logout').then(() => {
+                    router.push('/login')
+                })
+            }
+
+            return Promise.reject(new Error(res.msg || 'Error'))
         } else {
             return res
         }
@@ -61,7 +62,7 @@ service.interceptors.response.use(
     error => {
         console.log('err' + error) // for debug
         Message({
-            message: error.message,
+            message: error.msg,
             type: 'error',
             duration: 5 * 1000
         })

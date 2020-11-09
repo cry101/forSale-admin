@@ -8,17 +8,14 @@
         @close="close"
     >
         <el-form ref="form" :model="formData" :rules="rules" label-width="120px">
-            <el-form-item label="公司" prop="company_id">
-                <el-select v-model="formData.company_id" placeholder="请选择">
-                    <el-option
-                        v-for="item in company"
-                        :key="item._id"
-                        :label="item.name"
-                        :value="item._id" />
-                </el-select>
-            </el-form-item>
             <el-form-item label="分类名称" prop="name">
                 <el-input v-model="formData.name" />
+            </el-form-item>
+            <el-form-item label="分类编码" prop="code">
+                <el-input v-model="formData.code" />
+            </el-form-item>
+            <el-form-item label="排序" prop="sort">
+                <el-input v-model="formData.sort" type="number" />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" :loading="loading" @click="handleSubmit">保存</el-button>
@@ -40,6 +37,9 @@ export default {
         form: { // 编辑
             type: Object,
             default: null
+        },
+        company_id: {
+            type: String
         }
     },
     data() {
@@ -47,11 +47,13 @@ export default {
             loading: false,
             formData: {
                 name: '',
-                company_id: ''
+                company_id: '',
+                code: '',
+                sort: 0
             },
             rules: {
-                company_id: [{ required: true, message: '请选择公司', trigger: 'blur' }],
-                name: [{ required: true, message: '请输入分类名称', trigger: 'blur' }]
+                name: [{ required: true, message: '请输入分类名称', trigger: 'blur' }],
+                code: [{ required: true, message: '请输入分类编码', trigger: 'blur' }]
             },
             company: []
         }
@@ -63,9 +65,17 @@ export default {
         }
     },
     watch: {
-        form(val) {
-            this.formData = {
-                ...val
+        visible() {
+            if (this.form) {
+                this.formData = {
+                    ...this.form
+                }
+            } else {
+                this.formData = {
+                    name: '',
+                    code: '',
+                    sort: 0
+                }
             }
             this.$refs.form && this.$refs.form.clearValidate()
         }
@@ -86,7 +96,10 @@ export default {
                 if (vaild) {
                     this.loading = true
                     if (!this.formData.id) {
-                        addTag(this.formData).then(res => {
+                        addTag({
+                            ...this.formData,
+                            company_id: this.company_id
+                        }).then(res => {
                             this.$message.success('新增成功')
                             this.refresh()
                             this.loading = false
@@ -94,7 +107,10 @@ export default {
                             this.loading = false
                         })
                     } else {
-                        modifyTag(this.formData).then(res => {
+                        modifyTag({
+                            ...this.formData,
+                            company_id: this.company_id
+                        }).then(res => {
                             this.$message.success('修改成功')
                             this.refresh()
                             this.loading = false

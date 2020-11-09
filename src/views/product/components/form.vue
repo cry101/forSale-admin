@@ -34,6 +34,9 @@ export default {
         form: { // 编辑
             type: Object,
             default: null
+        },
+        company_id: {
+            type: String
         }
     },
     data() {
@@ -68,7 +71,10 @@ export default {
                 if (vaild) {
                     this.loading = true
                     if (!this.formData.id) {
-                        addProduct(this.formData).then(res => {
+                        addProduct({
+                            ...this.formData,
+                            company_id: this.company_id
+                        }).then(res => {
                             this.$message.success('新增成功')
                             this.refresh()
                             this.loading = false
@@ -76,7 +82,10 @@ export default {
                             this.loading = false
                         })
                     } else {
-                        modifyProduct(this.formData).then(res => {
+                        modifyProduct({
+                            ...this.formData,
+                            company_id: this.company_id
+                        }).then(res => {
                             this.$message.success('修改成功')
                             this.refresh()
                             this.loading = false

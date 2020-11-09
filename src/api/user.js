@@ -1,24 +1,49 @@
 import request from '@/utils/request'
 
+/**
+ * 用户登录
+ * @param username
+ * @param password
+*/
 export function login(data) {
     return request({
-        url: '/vue-admin-template/user/login',
+        url: `/api/v1/userLogin`,
         method: 'post',
         data
     })
 }
 
-export function getInfo(token) {
+/**
+ * 获取用户信息
+ * @param token in header
+*/
+export function userInfo() {
     return request({
-        url: '/vue-admin-template/user/info',
-        method: 'get',
-        params: { token }
+        url: `/api/v1/userInfo`,
+        method: 'get'
     })
 }
 
-export function logout() {
+// ---------------------------用户列表----------------------------
+/**
+ * 记录列表
+ * @param nickName
+*/
+export function listUser(params) {
     return request({
-        url: '/vue-admin-template/user/logout',
-        method: 'post'
+        url: '/api/v1/users',
+        method: 'get',
+        params
+    })
+}
+
+/**
+ * 删除记录
+ * @param id
+*/
+export function deleteUser(data) {
+    return request({
+        url: `/api/v1/user/${data.id}`,
+        method: 'delete'
     })
 }

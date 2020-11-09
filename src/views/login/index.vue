@@ -3,7 +3,7 @@
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
             <div class="title-container">
-                <h3 class="title">Login Form</h3>
+                <h3 class="title">进销存管理系统</h3>
             </div>
 
             <el-form-item prop="username">
@@ -41,11 +41,11 @@
                 </span>
             </el-form-item>
 
-            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
             <div class="tips">
-                <span style="margin-right:20px;">username: admin</span>
-                <span> password: any</span>
+                <span style="margin-right:20px;">测试账号：username: admin123</span>
+                <span> password: 12346</span>
             </div>
 
         </el-form>
@@ -53,29 +53,28 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
 
 export default {
     name: 'Login',
     data() {
         const validateUsername = (rule, value, callback) => {
-            if (!validUsername(value)) {
-                callback(new Error('Please enter the correct user name'))
+            if (value.length < 6) {
+                callback(new Error('账号不能小于6位'))
             } else {
                 callback()
             }
         }
         const validatePassword = (rule, value, callback) => {
             if (value.length < 6) {
-                callback(new Error('The password can not be less than 6 digits'))
+                callback(new Error('密码不能小于6位'))
             } else {
                 callback()
             }
         }
         return {
             loginForm: {
-                username: 'admin',
-                password: '111111'
+                username: '',
+                password: ''
             },
             loginRules: {
                 username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -130,8 +129,8 @@ export default {
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:#283443;
-$light_gray:#fff;
-$cursor: #fff;
+$light_gray:#000;
+$cursor: #000;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
@@ -154,12 +153,15 @@ $cursor: #fff;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 47px;
-      caret-color: $cursor;
+      caret-color: transparent;
 
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
+        box-shadow: 0 0 0px 1000px transparent inset !important;
       }
+      &:-internal-autofill-selected {
+          background-color: transparent!important;
+      }
+
     }
   }
 
@@ -175,12 +177,12 @@ $cursor: #fff;
 <style lang="scss" scoped>
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
-$light_gray:#eee;
+$light_gray:#000;
 
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background: url('~@/assets/images/bg.jpg') center center/100% 100% no-repeat;
   overflow: hidden;
 
   .login-form {
@@ -194,7 +196,7 @@ $light_gray:#eee;
 
   .tips {
     font-size: 14px;
-    color: #fff;
+    color: #000;
     margin-bottom: 10px;
 
     span {

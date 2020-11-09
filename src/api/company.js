@@ -112,7 +112,23 @@ export function listProduct(params) {
 }
 
 /**
- * 新增产品
+ * 同步产品
+ * @param code
+ * @param page_no
+ * @param page_size
+ * @param company_id
+ * @param tag_id
+*/
+export function fetchProduct(params) {
+    return request({
+        url: '/api/v1/product/fetch',
+        method: 'post',
+        params
+    })
+}
+
+/**
+ * 新增产品 暂时不用
  * @param name
 */
 export function addProduct(data) {
@@ -124,7 +140,7 @@ export function addProduct(data) {
 }
 
 /**
- * 更新产品
+ * 更新产品 暂时不用
  * @param id
  * @param name
 */

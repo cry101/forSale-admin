@@ -6,7 +6,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="handleSearch">搜索</el-button>
-                <el-button type="warning" @click="handleAdd()">新增</el-button>
+                <el-button @click="handleAdd()">新增</el-button>
             </el-form-item>
         </el-form>
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row>

@@ -5,25 +5,22 @@
         <breadcrumb class="breadcrumb-container" />
 
         <div class="right-menu">
+            <el-select v-model="companyId" placeholder="请选择" :disabled="!userInfo.isAdmin" @change="e => handleChange(e)">
+                <el-option
+                    v-for="item in company"
+                    :key="item._id"
+                    :label="item.name"
+                    :value="item._id" />
+            </el-select>
             <el-dropdown class="avatar-container" trigger="click">
                 <div class="avatar-wrapper">
-                    <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+                    <el-image :src="userInfo.avatar" class="user-avatar" />
+                    <span>{{ userInfo.nickName }}</span>
                     <i class="el-icon-caret-bottom" />
                 </div>
                 <el-dropdown-menu slot="dropdown" class="user-dropdown">
-                    <router-link to="/">
-                        <el-dropdown-item>
-                            Home
-                        </el-dropdown-item>
-                    </router-link>
-                    <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-                        <el-dropdown-item>Github</el-dropdown-item>
-                    </a>
-                    <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-                        <el-dropdown-item>Docs</el-dropdown-item>
-                    </a>
-                    <el-dropdown-item divided @click.native="logout">
-                        <span style="display:block;">Log Out</span>
+                    <el-dropdown-item @click.native="logout">
+                        <span style="display:block;">退出</span>
                     </el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
@@ -35,19 +32,43 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { listCompany } from '@/api/company'
 
 export default {
     components: {
         Breadcrumb,
         Hamburger
     },
+    data() {
+        return {
+            company: [],
+            companyId: ''
+        }
+    },
     computed: {
         ...mapGetters([
             'sidebar',
-            'avatar'
+            'userInfo',
+            'company_id'
         ])
     },
+    created() {
+        this.companyId = this.company_id
+        this.init()
+    },
     methods: {
+      	init() {
+            listCompany({
+                page_size: 1000
+            }).then(res => {
+                this.company = res.data.list
+            })
+        },
+        async handleChange(val) {
+            // console.log(val)
+            await this.$store.dispatch('user/setCompany', val)
+            window.location.reload()
+        },
         toggleSideBar() {
             this.$store.dispatch('app/toggleSideBar')
         },
@@ -87,7 +108,8 @@ export default {
   .right-menu {
     float: right;
     height: 100%;
-    line-height: 50px;
+	line-height: 50px;
+	display: flex;
 
     &:focus {
       outline: none;
@@ -112,11 +134,12 @@ export default {
     }
 
     .avatar-container {
-      margin-right: 30px;
+      margin: 0 15px;
 
       .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
+		position: relative;
+		display: flex;
+		align-items: center;
 
         .user-avatar {
           cursor: pointer;
@@ -127,9 +150,6 @@ export default {
 
         .el-icon-caret-bottom {
           cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
           font-size: 12px;
         }
       }
