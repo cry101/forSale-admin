@@ -81,6 +81,19 @@ export const constantRoutes = [
         ]
     },
     {
+        path: '/customer',
+        component: Layout,
+        redirect: '/customer/list',
+        meta: { title: '顾客管理' },
+        children: [
+            {
+                path: 'list',
+                component: () => import('@/views/customer'),
+                meta: { title: '顾客列表' }
+            }
+        ]
+    },
+    {
         path: '/inventory',
         component: Layout,
         redirect: '/inventory/record',

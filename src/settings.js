@@ -1,6 +1,6 @@
 module.exports = {
 
-    title: '进销存管理系统',
+    title: '星星点灯',
 
     /**
    * @type {boolean} true | false
