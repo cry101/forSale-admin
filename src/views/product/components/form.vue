@@ -3,16 +3,13 @@
         center
         :visible.sync="dialogVisible"
         width="660px"
-        title="新增"
+        title="编辑"
         top="60px"
         @close="close"
     >
         <el-form ref="form" :model="formData" :rules="rules" label-width="120px">
             <el-form-item label="产品名称" prop="name">
                 <el-input v-model="formData.name" />
-            </el-form-item>
-            <el-form-item label="产品价格">
-                <el-input v-model="formData.price" type="number" />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" :loading="loading" @click="handleSubmit">保存</el-button>
@@ -47,7 +44,7 @@ export default {
                 price: ''
             },
             rules: {
-                name: [{ required: true, message: '请输入公司名称', trigger: 'blur' }]
+                name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }]
             }
         }
     },

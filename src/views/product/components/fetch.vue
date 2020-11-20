@@ -33,6 +33,7 @@
                 <el-input v-model="formData.page_size" type="number" :max="100" />
             </el-form-item>
             <el-form-item>
+                <el-button type="primary" :loading="loading2" @click="handleCheck">检查</el-button>
                 <el-button type="primary" :loading="loading" @click="handleSubmit">保存</el-button>
                 <el-button @click="close">取消</el-button>
             </el-form-item>
@@ -41,7 +42,7 @@
 </template>
 
 <script>
-import { listCompany, fetchProduct } from '@/api/company'
+import { listCompany, fetchProduct, checkProduct } from '@/api/company'
 
 export default {
     props: {
@@ -57,6 +58,7 @@ export default {
     data() {
         return {
             loading: false,
+            loading2: false,
             formData: {
                 company_id: '',
                 tag_id: '',
@@ -105,6 +107,19 @@ export default {
                         this.loading = false
                     }).catch(() => {
                         this.loading = false
+                    })
+                }
+            })
+        },
+        handleCheck() {
+            this.$refs.form.validate(vaild => {
+                if (vaild) {
+                    this.loading2 = true
+                    checkProduct(this.formData).then(res => {
+                        this.$message.success('检查成功')
+                        this.loading2 = false
+                    }).catch(() => {
+                        this.loading2 = false
                     })
                 }
             })

@@ -62,7 +62,7 @@ service.interceptors.response.use(
     error => {
         console.log('err' + error) // for debug
         Message({
-            message: error.msg,
+            message: error.msg || '出错啦',
             type: 'error',
             duration: 5 * 1000
         })

@@ -5,7 +5,7 @@ const filterUrl = url => {
     if (/http:\/\//.test(url)) {
         return url
     }
-    return process.env.VUE_APP_BASE_API + '/' + url
+    return process.env.VUE_APP_BASE_API + '/api/' + url
 }
 
 export { filterUrl }

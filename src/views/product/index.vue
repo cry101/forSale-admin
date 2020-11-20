@@ -40,14 +40,14 @@
             <el-table-column align="center" label="更新时间" prop="updated_time" />
             <el-table-column align="center" label="操作">
                 <template slot-scope="scope">
-                    <!-- <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button> -->
+                    <el-button type="text" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
                     <el-button type="text" size="mini" @click="handleDelete(scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page_no" :limit.sync="listQuery.page_size" @pagination="fetchData" />
 
-        <!-- <product-form :form="form" :visible="visible" @close="visible = false" @refresh="handleRefresh" /> -->
+        <product-form :form="form" :visible="visible2" @close="visible2 = false" @refresh="handleRefresh" />
         <fetch-form :visible="visible" :tag-list="tagList" :company_id="company_id" @close="visible = false" @refresh="handleRefresh" />
     </div>
 </template>
@@ -55,12 +55,13 @@
 <script>
 import { listProduct, deleteProduct, listTag } from '@/api/company'
 import FetchForm from './components/fetch'
+import ProductForm from './components/form'
 import { mapGetters } from 'vuex'
 import Pagination from '@/components/Pagination'
 export default {
     name: 'Product',
     components: {
-        Pagination, FetchForm
+        Pagination, FetchForm, ProductForm
     },
     data() {
         return {
@@ -74,7 +75,9 @@ export default {
                 tag_id: ''
             },
             visible: false,
-            tagList: []
+            visible2: false,
+            tagList: [],
+            form: {}
         }
     },
     computed: {
@@ -107,6 +110,14 @@ export default {
         handleAdd() {
             this.visible = true
         },
+        handleEdit(item) {
+            this.form = {
+                name: item.name,
+                tag_id: item.tag_id,
+                id: item._id
+            }
+            this.visible2 = true
+        },
         handleDelete(item) {
             this.$confirm('是否删除该产品！', { type: 'warning' }).then(() => {
                 deleteProduct({ id: item._id }).then((response) => {
@@ -117,6 +128,7 @@ export default {
         },
         handleRefresh() {
             this.visible = false
+            this.visible2 = false
             this.fetchData()
         }
     }

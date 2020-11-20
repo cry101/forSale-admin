@@ -114,14 +114,24 @@ export function listProduct(params) {
 /**
  * 同步产品
  * @param code
- * @param page_no
- * @param page_size
  * @param company_id
  * @param tag_id
 */
 export function fetchProduct(params) {
     return request({
         url: '/api/v1/product/fetch',
+        method: 'post',
+        params
+    })
+}
+
+/**
+ * 检查产品
+ * @param code
+*/
+export function checkProduct(params) {
+    return request({
+        url: '/api/v1/product/check',
         method: 'post',
         params
     })

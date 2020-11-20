@@ -25,7 +25,7 @@
             </el-table-column>
             <el-table-column align="center" label="状态">
                 <template slot-scope="scope">
-                    <el-tag :type="scope.row.type ? 'warning' : ''">{{ scope.row.type ? '进库' : '出库' }}</el-tag>
+                    <el-tag :type="scope.row.type ? 'success' : ''">{{ scope.row.type ? '进库' : '出库' }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column align="center" label="顾客下单">
