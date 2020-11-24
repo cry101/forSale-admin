@@ -49,13 +49,17 @@
             </div>
 
         </el-form>
+        <c-footer />
     </div>
 </template>
 
 <script>
-
+import CFooter from '@/components/Footer'
 export default {
     name: 'Login',
+    components: {
+        CFooter
+    },
     data() {
         const validateUsername = (rule, value, callback) => {
             if (value.length < 6) {
@@ -140,6 +144,9 @@ $cursor: #000;
 
 /* reset element-ui css */
 .login-container {
+    .footer{
+        color: #000;
+    }
   .el-input {
     display: inline-block;
     height: 47px;
