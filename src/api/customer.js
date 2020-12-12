@@ -7,7 +7,7 @@ import request from '@/utils/request'
 */
 export function listCustomer(params) {
     return request({
-        url: '/api/v1/customers',
+        url: '/v1/customers',
         method: 'get',
         params
     })

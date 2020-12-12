@@ -7,7 +7,7 @@ import request from '@/utils/request'
 */
 export function login(data) {
     return request({
-        url: `/api/v1/userLogin`,
+        url: `/v1/userLogin`,
         method: 'post',
         data
     })
@@ -19,7 +19,7 @@ export function login(data) {
 */
 export function userInfo() {
     return request({
-        url: `/api/v1/userInfo`,
+        url: `/v1/userInfo`,
         method: 'get'
     })
 }
@@ -31,7 +31,7 @@ export function userInfo() {
 */
 export function listUser(params) {
     return request({
-        url: '/api/v1/users',
+        url: '/v1/users',
         method: 'get',
         params
     })
@@ -43,7 +43,7 @@ export function listUser(params) {
 */
 export function deleteUser(data) {
     return request({
-        url: `/api/v1/user/${data.id}`,
+        url: `/v1/user/${data.id}`,
         method: 'delete'
     })
 }

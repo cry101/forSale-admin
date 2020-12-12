@@ -7,7 +7,7 @@ import request from '@/utils/request'
 */
 export function listRecord(params) {
     return request({
-        url: '/api/v1/records',
+        url: '/v1/records',
         method: 'get',
         params
     })
@@ -19,7 +19,7 @@ export function listRecord(params) {
 */
 export function deleteRecord(data) {
     return request({
-        url: `/api/v1/record/${data.id}`,
+        url: `/v1/record/${data.id}`,
         method: 'delete'
     })
 }
@@ -31,7 +31,7 @@ export function deleteRecord(data) {
 */
 export function listInventory(params) {
     return request({
-        url: '/api/v1/inventorys',
+        url: '/v1/inventorys',
         method: 'get',
         params
     })
@@ -43,7 +43,7 @@ export function listInventory(params) {
 */
 export function deleteInventory(data) {
     return request({
-        url: `/api/v1/inventory/${data.id}`,
+        url: `/v1/inventory/${data.id}`,
         method: 'delete'
     })
 }

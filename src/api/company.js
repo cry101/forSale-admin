@@ -7,7 +7,7 @@ import request from '@/utils/request'
 */
 export function listCompany(params) {
     return request({
-        url: '/api/v1/companys',
+        url: '/v1/companys',
         method: 'get',
         params
     })
@@ -19,7 +19,7 @@ export function listCompany(params) {
 */
 export function addCompany(data) {
     return request({
-        url: '/api/v1/company',
+        url: '/v1/company',
         method: 'post',
         data
     })
@@ -32,7 +32,7 @@ export function addCompany(data) {
 */
 export function modifyCompany(data) {
     return request({
-        url: `/api/v1/company/${data.id}`,
+        url: `/v1/company/${data.id}`,
         method: 'put',
         data
     })
@@ -44,7 +44,7 @@ export function modifyCompany(data) {
 */
 export function deleteCompany(data) {
     return request({
-        url: `/api/v1/company/${data.id}`,
+        url: `/v1/company/${data.id}`,
         method: 'delete'
     })
 }
@@ -56,7 +56,7 @@ export function deleteCompany(data) {
 */
 export function listTag(params) {
     return request({
-        url: '/api/v1/tags',
+        url: '/v1/tags',
         method: 'get',
         params
     })
@@ -68,7 +68,7 @@ export function listTag(params) {
 */
 export function addTag(data) {
     return request({
-        url: '/api/v1/tag',
+        url: '/v1/tag',
         method: 'post',
         data
     })
@@ -81,7 +81,7 @@ export function addTag(data) {
 */
 export function modifyTag(data) {
     return request({
-        url: `/api/v1/tag/${data.id}`,
+        url: `/v1/tag/${data.id}`,
         method: 'put',
         data
     })
@@ -93,7 +93,7 @@ export function modifyTag(data) {
 */
 export function deleteTag(data) {
     return request({
-        url: `/api/v1/tag/${data.id}`,
+        url: `/v1/tag/${data.id}`,
         method: 'delete'
     })
 }
@@ -105,7 +105,7 @@ export function deleteTag(data) {
 */
 export function listProduct(params) {
     return request({
-        url: '/api/v1/products',
+        url: '/v1/products',
         method: 'get',
         params
     })
@@ -119,7 +119,7 @@ export function listProduct(params) {
 */
 export function fetchProduct(params) {
     return request({
-        url: '/api/v1/product/fetch',
+        url: '/v1/product/fetch',
         method: 'post',
         params
     })
@@ -131,7 +131,7 @@ export function fetchProduct(params) {
 */
 export function checkProduct(params) {
     return request({
-        url: '/api/v1/product/check',
+        url: '/v1/product/check',
         method: 'post',
         params
     })
@@ -143,7 +143,7 @@ export function checkProduct(params) {
 */
 export function addProduct(data) {
     return request({
-        url: '/api/v1/product',
+        url: '/v1/product',
         method: 'post',
         data
     })
@@ -156,7 +156,7 @@ export function addProduct(data) {
 */
 export function modifyProduct(data) {
     return request({
-        url: `/api/v1/product/${data.id}`,
+        url: `/v1/product/${data.id}`,
         method: 'put',
         data
     })
@@ -168,7 +168,7 @@ export function modifyProduct(data) {
 */
 export function deleteProduct(data) {
     return request({
-        url: `/api/v1/product/${data.id}`,
+        url: `/v1/product/${data.id}`,
         method: 'delete'
     })
 }

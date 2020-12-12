@@ -35,7 +35,7 @@ Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
-Vue.prototype.$baseUrl = process.env.VUE_APP_BASE_API
+Vue.prototype.$baseUrl = process.env.VUE_APP_BASE_API || '/api'
 
 new Vue({
     el: '#app',
