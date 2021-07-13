@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        闽ICP备2020021072号
+        <a href="https://beian.miit.gov.cn/" target="_blank">闽ICP备2020021072号</a>
     </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .footer{
     position: fixed;
     width: 100%;
@@ -19,5 +19,8 @@ export default {
     text-align: center;
     font-size: 12px;
     color: #999;
+    a{
+        cursor: pointer;
+    }
 }
 </style>
